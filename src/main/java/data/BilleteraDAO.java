@@ -12,6 +12,7 @@ public class BilleteraDAO {
     private static final String SQL_READ = "SELECT * FROM billetera";
     private static final String SQL_UPDATE_PRECIO = "UPDATE billetera SET precio = ? WHERE idbilletera = ?";
     private static final String SQL_UPDATE_CANTIDAD = "UPDATE billetera SET cantidad = ? WHERE idbilletera = ?";
+    private static final String SQL_UPDATE= "UPDATE billetera SET moneda = ?, fundador = ?, limiteDeEmision = ?, precio = ?, cantidad = ? WHERE idbilletera = ?";
     private static final String SQL_DELETE = "DELETE FROM billetera WHERE idbilletera = ?";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM billetera WHERE idbilletera= ?";
 
@@ -157,15 +158,41 @@ public class BilleteraDAO {
         }
         return registros;
     }
+    public int update(Monedas moned) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int registros = 0;
+        try {
+            conn = getConexion();
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            stmt.setString(1, moned.getMoneda());
+            stmt.setString(2, moned.getFundador());
+            stmt.setInt(3, moned.getLimiteDeEmision());
+            stmt.setDouble(4, moned.getPrecio());
+            stmt.setInt(5, moned.getCantidad());
+            stmt.setInt(6, moned.getIdbilletera());
+            registros = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            try {
+                close(stmt);
+                close(conn);
+            } catch (SQLException ex) {
+                ex.printStackTrace(System.out);
+            }
+        }
+        return registros;
+    }
 
-    public int delete(Monedas moned) {
+    public int delete(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int registros = 0;
         try {
             conn = getConexion();
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, moned.getIdbilletera());
+            stmt.setInt(1, id);
             registros = stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);

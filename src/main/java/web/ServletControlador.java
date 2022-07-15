@@ -21,6 +21,7 @@ public class ServletControlador extends HttpServlet{
                     editarMoneda(req,res);
                     break;
                 case "eliminar":
+                    eliminarMoneda(req,res);
                     break;
                 default:
                     accionDefault(req, res);
@@ -42,6 +43,7 @@ public class ServletControlador extends HttpServlet{
                     break;
                 case "modificar":
                     modificarMoneda(req,res);
+                    break;
                 default:
                     accionDefault(req, res);
                     break;
@@ -81,11 +83,33 @@ public class ServletControlador extends HttpServlet{
         req.getRequestDispatcher("/WEB-INF/paginas/operaciones/editarMoneda.jsp").forward(req, res);
     }
     
-    private void modificarMoneda(HttpServletRequest req, HttpServletResponse res){
-    
-    }   
-    
+        private void modificarMoneda(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String moneda = req.getParameter("moneda");
+        String fundador = req.getParameter("fundador");
+        int limiteDeEmision = Integer.parseInt(req.getParameter("cantPaginas"));
+        double precio = Double.parseDouble(req.getParameter("precio"));
+        int cantidad = Integer.parseInt(req.getParameter("cantidad"));
 
+        int idbilletera = Integer.parseInt(req.getParameter("idbilletera"));
+
+        Monedas mod = new Monedas(idbilletera, moneda, fundador, limiteDeEmision, precio, cantidad);
+
+        int regMod = new BilleteraDAO().update(mod);
+
+        System.out.println("SE ACTUALIZARON: " + regMod + " REGISTROS");
+
+        accionDefault(req, res);
+    }
+    private void eliminarMoneda(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        int idbilletera = Integer.parseInt(req.getParameter("idbilletera"));
+        
+        int regDel = new BilleteraDAO().delete(idbilletera);
+        
+        System.out.println("REGISTROS ELIMINADOS: "+ regDel);
+        
+        accionDefault(req, res);
+    }
+  
     private int calcularCant(List<Monedas> lista){
         int cantidad=0;
         for (int i = 0; i < lista.size(); i++) {
