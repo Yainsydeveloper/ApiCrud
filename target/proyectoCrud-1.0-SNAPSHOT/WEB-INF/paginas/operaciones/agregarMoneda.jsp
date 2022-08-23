@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group">
                         <label for="limiteDeEmision">Limite de Emisión</label>
-                        <input type="number" class="form-control" name="cantPaginas" required="">
+                        <input type="number" class="form-control" name="limiteDeEmision" required="">
                     </div>
                     <div class="form-group">
                         <label for="precio">Precio</label>

@@ -31,7 +31,7 @@
                                     <td>${status.count}</td>
                                     <td>${moned.moneda}</td>
                                     <td>${moned.fundador}</td>
-                                    <td>${moned.limiteDeEmision} Millones</td>
+                                    <td>${moned.limiteDeEmision}</td>
                                     <td><fmt:formatNumber value="${moned.precio}" type="currency"/></td>
                                     <td>${moned.cantidad}</td>
                                     <!-- COMPLETAR HREF CUANDO ESTE TERMINADO JSP EDITAR -->

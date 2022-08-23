@@ -18,7 +18,8 @@
                     <i class="fas fa-trash"></i>
                     Eliminar Moneda
                 </a>                  
-            </div>           
+            </div>    
+                    
         </div>
     </div>
 </section>
